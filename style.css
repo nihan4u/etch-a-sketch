@@ -1,11 +1,16 @@
 .container {
+    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    height: 800px;
-    width: 800px;
-    background-color: rgb(200, 177, 177);
+    height: 700px;
+    width: 700px;
+    background-color: rgb(202, 196, 196);
+    border: 1px solid black;
 }
 
 .grid-item {
-    background-color: yellow;
+    width: calc(100% / 16);
+    height: calc(100% / 16);
+    border: 1px solid black;
+    box-sizing: border-box; /* Include border in dimensions */
 }
