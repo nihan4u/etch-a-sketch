@@ -19,7 +19,7 @@ clearButton.addEventListener('click', clearGrid);
 const changeGridButton = document.querySelector('#change-grid');
 changeGridButton.addEventListener('click', changeGrid);
 
-const rainbowButton = document.querySelector('#toggle-rnbw');
+const rainbowButton = document.querySelector('#toggle-rainbow');
 rainbowButton.addEventListener('click', toggleRainbow);
 
 container.addEventListener('mousedown', handleMouseDown);
@@ -50,12 +50,10 @@ function handleMouseLeave() {
 
 function toggleRainbow() {
     if (rainbowMode === false) {
-        rainbowMode = true; 
-        console.log('Rainbow ON')
+        rainbowMode = true;
     }
     else if (rainbowMode === true) {
         rainbowMode = false;
-        console.log('Rainbow OFF')
     }
 }
 
@@ -79,7 +77,6 @@ function changeGrid() {
     } else {
         alert('Please enter a valid width.');
     }
-    console.log(newSize);
 }
 
 function clearGrid() {
