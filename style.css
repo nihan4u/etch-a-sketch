@@ -1,16 +1,23 @@
+body {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(202, 196, 196);
+    align-items: flex-start;
+}
+
 .container {
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    height: 700px;
-    width: 700px;
+    height: 750px;
+    width: 750px;
     background-color: rgb(202, 196, 196);
     border: 1px solid black;
 }
 
 .grid-item {
-    width: calc(100% / 16);
-    height: calc(100% / 16);
+    width: calc(100% / var(--grid-size));
+    height: calc(100% / var(--grid-size));
     border: 1px solid black;
     box-sizing: border-box; /* Include border in dimensions */
 }
