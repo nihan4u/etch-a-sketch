@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.querySelector(".container");
     let mouseDown = false;
     let rainbowMode = false;
-    const defaultSize = 16;
+    let opacityMode = false
+    let defaultSize = 16;
 
     createGrid(container, defaultSize);
     function createGrid(container, size) {
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(div);
     }
 }
+
 const clearButton = document.querySelector('#clear-grid');
 clearButton.addEventListener('click', clearGrid);
 
@@ -22,39 +24,35 @@ changeGridButton.addEventListener('click', changeGrid);
 const rainbowButton = document.querySelector('#toggle-rainbow');
 rainbowButton.addEventListener('click', toggleRainbow);
 
-container.addEventListener('mousedown', handleMouseDown);
-container.addEventListener('mouseover', handleMouseOver);
-container.addEventListener('mouseup', handleMouseUp);
-container.addEventListener('mouseleave', handleMouseLeave);
+const opacityButton = document.querySelector('#toggle-opacity');
+opacityButton.addEventListener('click', toggleOpacity);
 
-function handleMouseDown(event) {
+container.addEventListener('mousedown', handleMouseEvent);
+container.addEventListener('mouseover', handleMouseEvent);
+container.addEventListener('mouseup', handleMouseEvent);
+container.addEventListener('mouseleave', handleMouseEvent);;
+
+function handleMouseEvent(event) {
     if (event.target.classList.contains('grid-item')) {
-        mouseDown = true;
-        changeColor(event.target);
+        if (event.type === 'mousedown') {
+            mouseDown = true;
+            changeColor(event.target);
+        } else if (event.type === 'mouseover' && mouseDown) {
+            changeColor(event.target);
+        } else if (event.type === 'mouseup') {
+            mouseDown = false;
+        }
+    } else if (event.type === 'mouseleave') {
+        mouseDown = false;
     }
-}
-
-function handleMouseOver(event) {
-    if (mouseDown && event.target.classList.contains('grid-item')) {
-        changeColor(event.target);
-    }
-}
-
-function handleMouseUp() {
-    mouseDown = false;
-}
-
-function handleMouseLeave() {
-    mouseDown = false;
 }
 
 function toggleRainbow() {
-    if (rainbowMode === false) {
-        rainbowMode = true;
-    }
-    else if (rainbowMode === true) {
-        rainbowMode = false;
-    }
+    rainbowMode = !rainbowMode;
+}
+
+function toggleOpacity() {
+    opacityMode = !opacityMode;
 }
 
 function changeColor(box) {
@@ -68,6 +66,13 @@ function changeColor(box) {
         box.style.backgroundColor = 'black';
     }
 };
+
+function darkenBox(box) {
+    if (toggleOpacity) {
+        interactions++;
+        
+    }
+}
 
 function changeGrid() {
     const newSize = parseInt(prompt('Enter new size'));

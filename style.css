@@ -20,4 +20,5 @@ body {
     height: calc(100% / var(--grid-size));
     border: 1px solid black;
     box-sizing: border-box; /* Include border in dimensions */
+    opacity: 90%;
 }
