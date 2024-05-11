@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let mouseDown = false;
     let rainbowMode = false;
     let opacityMode = false
+    let eraserMode = false;
     let defaultSize = 16;
 
     createGrid(container, defaultSize);
@@ -26,6 +27,9 @@ rainbowButton.addEventListener('click', toggleRainbow);
 
 const opacityButton = document.querySelector('#toggle-opacity');
 opacityButton.addEventListener('click', toggleOpacity);
+
+const eraserButton = document.querySelector('#toggle-eraser');
+eraserButton.addEventListener('click', toggleEraser);
 
 container.addEventListener('mousedown', handleMouseEvent);
 container.addEventListener('mouseover', handleMouseEvent);
@@ -55,22 +59,33 @@ function toggleOpacity() {
     opacityMode = !opacityMode;
 }
 
+function toggleEraser() {
+    eraserMode = !eraserMode;
+}
+
 function changeColor(box) {
     if (rainbowMode === true) {
         const randomR = Math.floor(Math.random() * 256);
         const randomG = Math.floor(Math.random() * 256);
         const randomB = Math.floor(Math.random() * 256);
         box.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
-    }
-    else {
+    } else if (eraserMode === true) {
+        box.style.backgroundColor = '';
+    } else {
         box.style.backgroundColor = 'black';
     }
 };
 
+function getCurrentOpacity() {
+    const currentColor = window.getComputedStyle(box).getPropertyValue('background-color');
+    const currentOpacity = parseFloat(currentColor.split())
+}
+
 function darkenBox(box) {
-    if (toggleOpacity) {
+    if (opacityMode === true) {
         interactions++;
-        
+        const newOpacity = Math.min(getCurrentOpacity(box) + 0.1, 1);
+        box.style.backgroundColor = `rgba(0, 0, 0, ${newOpacity}`;
     }
 }
 
