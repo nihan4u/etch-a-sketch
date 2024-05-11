@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let opacityMode = false
     let eraserMode = false;
     let defaultSize = 16;
+    let interactions = 0;
 
     createGrid(container, defaultSize);
     function createGrid(container, size) {
@@ -53,41 +54,60 @@ function handleMouseEvent(event) {
 
 function toggleRainbow() {
     rainbowMode = !rainbowMode;
+    if (rainbowMode === true) {
+        rainbowButton.style.backgroundColor = 'yellow';
+    } else {
+        rainbowButton.style.backgroundColor = '';
+    }
 }
 
 function toggleOpacity() {
     opacityMode = !opacityMode;
+    if (opacityMode === true) {
+        opacityButton.style.backgroundColor = 'yellow';
+    } else {
+        opacityButton.style.backgroundColor = '';
+    }
 }
 
 function toggleEraser() {
     eraserMode = !eraserMode;
+    if (eraserMode === true) {
+        eraserButton.style.backgroundColor = 'yellow';
+    } else {
+        eraserButton.style.backgroundColor = '';
+    }
 }
 
 function changeColor(box) {
-    if (rainbowMode === true) {
+    if (eraserMode === true) {
+        box.style.backgroundColor = '';
+    } else if (rainbowMode === true) {
         const randomR = Math.floor(Math.random() * 256);
         const randomG = Math.floor(Math.random() * 256);
         const randomB = Math.floor(Math.random() * 256);
         box.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
-    } else if (eraserMode === true) {
-        box.style.backgroundColor = '';
+        darkenBox(box);
     } else {
-        box.style.backgroundColor = 'black';
+        box.style.backgroundColor = 'red';
+        darkenBox(box);
     }
 };
-
-function getCurrentOpacity() {
-    const currentColor = window.getComputedStyle(box).getPropertyValue('background-color');
-    const currentOpacity = parseFloat(currentColor.split())
-}
 
 function darkenBox(box) {
     if (opacityMode === true) {
         interactions++;
-        const newOpacity = Math.min(getCurrentOpacity(box) + 0.1, 1);
-        box.style.backgroundColor = `rgba(0, 0, 0, ${newOpacity}`;
+        const currentColor = window.getComputedStyle(box).getPropertyValue('background-color');
+        const currentOpacity = currentColor ? parseFloat(currentColor.split(',')[3].trim().slice(0,-1)) : 1;
+        const newOpacity = Math.min(currentOpacity + 0.1, 1);
+        box.style.backgroundColor = `rgba(0, 0, 0, ${newOpacity})`;
+        if (interactions >= 10 && newOpacity === 1) {
+            alert('Square is completely black!');
+        }
     }
 }
+
+
 
 function changeGrid() {
     const newSize = parseInt(prompt('Enter new size'));
